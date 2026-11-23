@@ -1,0 +1,255 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Design tokens — QG_web
+   Direction (client requirement): minimalist, soft/calm, slightly feminine.
+   Palette: pink, cream, white only. No purple/blue gradients, no glassmorphism.
+   ========================================================================== */
+@theme {
+  /* Surfaces */
+  --color-cream: #fbf7f2; /* page background */
+  --color-linen: #f4ece3; /* alternate section surface */
+  --color-blush: #f2dcdc; /* soft pink fill */
+  --color-white: #ffffff;
+
+  /* Ink & lines */
+  --color-ink: #3b2f2e; /* primary text (warm near-black) */
+  --color-muted: #6f605c; /* secondary text, AA on cream */
+  --color-line: #e8dcd4; /* borders / dividers */
+
+  /* Rose accents — pink family, accessible on cream/white */
+  --color-rose: #b76e79;
+  --color-rose-deep: #8a4e59; /* interactive text/buttons */
+  --color-rose-soft: #d9a7ae;
+
+  /* Typography */
+  --font-display: var(--font-lora), ui-serif, Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-be-vietnam), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+
+  /* Radii — restrained, not pill-shaped */
+  --radius-control: 0.625rem;
+  --radius-card: 1rem;
+
+  /* Soft, low-contrast shadow used sparingly */
+  --shadow-soft: 0 1px 2px rgba(59, 47, 46, 0.04),
+    0 10px 30px -18px rgba(59, 47, 46, 0.18);
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-tap-highlight-color: rgba(183, 110, 121, 0.18);
+    /* Do not set `scroll-behavior: smooth` on <html>: it can interfere with the
+       App Router's scroll-to-top on navigation. Scroll reset is handled in
+       components/scroll-to-top.tsx. */
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Visible focus replacement — never remove outline without this. */
+  :focus-visible {
+    outline: 2px solid var(--color-rose-deep);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-blush);
+    color: var(--color-ink);
+  }
+
+  /* Gentle page-enter transition. */
+  @keyframes page-enter {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .page-enter {
+    animation: page-enter 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  img,
+  picture,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@layer components {
+  /* Page gutter — a single source of horizontal rhythm. */
+  .container-page {
+    width: 100%;
+    max-width: 76rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .container-page {
+      padding-inline: 2rem;
+    }
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding-inline: 1.25rem;
+    border-radius: var(--radius-control);
+    font-weight: 500;
+    line-height: 1;
+    transition:
+      background-color 160ms ease,
+      border-color 160ms ease,
+      color 160ms ease;
+  }
+
+  .btn-primary {
+    background-color: var(--color-rose-deep);
+    color: var(--color-white);
+  }
+
+  .btn-primary:hover {
+    background-color: #7a444e;
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    color: var(--color-ink);
+    border: 1px solid var(--color-line);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--color-rose-soft);
+    background-color: var(--color-white);
+  }
+}
+
+/* Respect reduced-motion: disable long transitions. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Rich text (Tiptap) content — shared styling for the admin editor area and
+   the rendered blog post. Scoped so it never leaks into other pages. */
+.rich-editor-content,
+.rich-post-content {
+  img {
+    display: block;
+    max-width: min(100%, 44rem);
+    height: auto;
+    margin: 1rem auto;
+    border-radius: var(--radius-control, 8px);
+  }
+
+  img[data-align="center"],
+  &[style*="center"] img {
+    margin-inline: auto;
+  }
+
+  h2 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-display, inherit);
+    font-size: 1.5rem;
+    line-height: 1.2;
+    color: var(--color-ink);
+  }
+
+  h3 {
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+    line-height: 1.3;
+    color: var(--color-ink);
+  }
+
+  p {
+    margin-top: 0.75rem;
+    color: var(--color-muted, inherit);
+    line-height: 1.7;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  ul,
+  ol {
+    margin-top: 0.75rem;
+    padding-left: 1.5rem;
+    color: var(--color-muted, inherit);
+    line-height: 1.7;
+  }
+
+  ul {
+    list-style: disc;
+  }
+
+  ol {
+    list-style: decimal;
+  }
+
+  blockquote {
+    margin-top: 1rem;
+    padding-left: 1rem;
+    border-left: 3px solid var(--color-rose-soft);
+    color: var(--color-muted, inherit);
+  }
+
+  strong {
+    color: var(--color-ink);
+  }
+}
+
+/* The editor area keeps every block visible even before content is typed. */
+.rich-editor-content p:first-child {
+  margin-top: 0;
+}
+
+.rich-editor-content p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: var(--color-muted);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}

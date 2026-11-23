@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS blog_posts;
+DROP TABLE IF EXISTS reviews;
+DROP TABLE IF EXISTS custom_order_requests;
+DROP TABLE IF EXISTS order_items;
+DROP TABLE IF EXISTS order_requests;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS admin_sessions;
+DROP TABLE IF EXISTS admin_users;

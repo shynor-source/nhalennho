@@ -1,0 +1,72 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Next.js build output
+frontend/.next/
+frontend/out/
+frontend/build/
+
+# Cloudflare Workers build output (OpenNext adapter, ADR-0013)
+frontend/.open-next/
+frontend/.wrangler/
+frontend/.dev.vars
+
+# Go build output
+backend/bin/
+backend/tmp/
+*.exe
+
+# Environment files — real values must never be committed.
+# .env.example is the only committed env file.
+.env
+.env.*
+!.env.example
+!*.env.example
+!frontend/.env.cloudflare.example
+
+# Secrets, certificates, keys
+*.pem
+*.key
+*.crt
+secrets/
+certs/
+
+# Local data / uploads
+data/
+uploads/
+
+# Logs
+*.log
+logs/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Test / coverage
+coverage/
+*.test.out
+*.tsbuildinfo
+
+# Local tooling caches
+.cache/
+.turbo/
+
+# Local database/uploads backups
+backups/
+
+# Internal agent/brief resources — private working notes, not part of the
+# public repository.
+agents_resource/
+
+# Internal working docs (ADRs, deploy checklists, notes) — kept local, not
+# part of the public repository. README.md is the only published documentation.
+docs/
+
+# Raw design assets kept locally only (final images live in frontend/public)
+/brand-raw/
+*.psd

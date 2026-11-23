@@ -1,0 +1,38 @@
+# Never send VCS, secrets, dependencies or build output into a build context.
+.git
+.gitignore
+**/.git
+
+# Env files and secrets — never copied into images
+.env
+.env.*
+!*.env.example
+secrets/
+certs/
+*.pem
+*.key
+*.crt
+
+# Dependencies / build output (rebuilt inside the image)
+**/node_modules
+**/.next
+**/out
+**/bin
+**/tmp
+
+# Local data
+data/
+uploads/
+logs/
+*.log
+
+# Editor / OS
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+
+# Docs / agent resources are not needed to build images
+docs/
+agents_resource/
+README.md

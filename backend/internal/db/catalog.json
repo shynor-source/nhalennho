@@ -1,0 +1,504 @@
+{
+  "categories": [
+    {
+      "name": "Thú len to",
+      "description": "Thú bông len cỡ lớn, móc tay tỉ mỉ.",
+      "sortOrder": 1
+    },
+    {
+      "name": "Thú len nhỏ",
+      "description": "Thú bông len nhỏ xinh, dễ thương.",
+      "sortOrder": 2
+    },
+    {
+      "name": "Nhân vật",
+      "description": "Thú bông len hình nhân vật yêu thích.",
+      "sortOrder": 3
+    },
+    {
+      "name": "Móc khóa",
+      "description": "Móc khóa len nhỏ gọn, tiện mang theo.",
+      "sortOrder": 4
+    },
+    {
+      "name": "Hoa đan móc",
+      "description": "Hoa len bền đẹp, làm quà tặng.",
+      "sortOrder": 5
+    },
+    {
+      "name": "Phụ kiện",
+      "description": "Phụ kiện len: kẹp tóc, găng tay, khăn.",
+      "sortOrder": 6
+    },
+    {
+      "name": "Trang trí",
+      "description": "Đồ len trang trí bàn làm việc và không gian.",
+      "sortOrder": 7
+    }
+  ],
+  "products": [
+    {
+      "category": "Thú len to",
+      "name": "Handmade Bé Thỏ Bunny Len Handmade Big Size 40cm - Thú Bông Mặc Yếm Nâu Đeo Mũ Siêu Dễ Thương",
+      "priceVnd": 576000,
+      "priceMaxVnd": 582000,
+      "description": "Thú bông len cỡ lớn, móc tay tỉ mỉ. Các mức giá: 576.000đ, 582.000đ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/47008012427"
+    },
+    {
+      "category": "Thú len to",
+      "name": "Handmade Sóc Ú Len Big Size 50cm - Thú Bông Sóc Nâu Yếm Xanh Siêu Dễ Thương",
+      "priceVnd": 896000,
+      "priceMaxVnd": null,
+      "description": "Thú bông len cỡ lớn, móc tay tỉ mỉ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/44858016949"
+    },
+    {
+      "category": "Thú len to",
+      "name": "Handmade Thỏ Bông Len Nhung Yếm Nhiều Màu Big Size - Thú Nhồi Bông Cao Cấp Dễ Thương",
+      "priceVnd": 682000,
+      "priceMaxVnd": 692000,
+      "description": "Thú bông len cỡ lớn, móc tay tỉ mỉ. Các mức giá: 682.000đ, 692.000đ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/55207992274"
+    },
+    {
+      "category": "Thú len to",
+      "name": "Handmade Thú bông Stitch bằng len mềm mịn đáng yêu",
+      "priceVnd": 465000,
+      "priceMaxVnd": null,
+      "description": "Thú bông len cỡ lớn, móc tay tỉ mỉ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/55907765761"
+    },
+    {
+      "category": "Thú len to",
+      "name": "Heo Cosplay Hổ Len Nhung Đũa Handmade - Thú Bông Heo Cute",
+      "priceVnd": 550000,
+      "priceMaxVnd": null,
+      "description": "Thú bông len cỡ lớn, móc tay tỉ mỉ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/49466733996"
+    },
+    {
+      "category": "Thú len to",
+      "name": "Heo phù thủy handmade len nhung đũa - bé gấu ôm dễ thương",
+      "priceVnd": 485000,
+      "priceMaxVnd": null,
+      "description": "Thú bông len cỡ lớn, móc tay tỉ mỉ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/24485706381"
+    },
+    {
+      "category": "Thú len to",
+      "name": "Thỏ Len Handmade Big Size - Thỏ Bông Mặc Yếm Tím Đeo Nơ Siêu Dễ Thương",
+      "priceVnd": 350000,
+      "priceMaxVnd": null,
+      "description": "Thú bông len cỡ lớn, móc tay tỉ mỉ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/50608044673"
+    },
+    {
+      "category": "Thú len nhỏ",
+      "name": "Bé heo mặc đồ thỏ và đồ gấu dễ thương",
+      "priceVnd": 220000,
+      "priceMaxVnd": null,
+      "description": "Thú bông len nhỏ xinh, dễ thương.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/28910333266"
+    },
+    {
+      "category": "Thú len nhỏ",
+      "name": "Bé vịt đội hành lá xinh xinh",
+      "priceVnd": 90000,
+      "priceMaxVnd": null,
+      "description": "Thú bông len nhỏ xinh, dễ thương.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/26560333364"
+    },
+    {
+      "category": "Thú len nhỏ",
+      "name": "Capybara Len Handmade - Thú Bông Capybara Be Cute",
+      "priceVnd": 148000,
+      "priceMaxVnd": null,
+      "description": "Thú bông len nhỏ xinh, dễ thương.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/53209051484"
+    },
+    {
+      "category": "Thú len nhỏ",
+      "name": "Gà Con Len Handmade Đội Mũ Kem Ốc Quế - Thú Bông Gà Vàng Cute",
+      "priceVnd": 89000,
+      "priceMaxVnd": null,
+      "description": "Thú bông len nhỏ xinh, dễ thương.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/56010339383"
+    },
+    {
+      "category": "Thú len nhỏ",
+      "name": "Gấu Bramble và Briar Len Handmade - Thú Bông Gấu Boonie Nâu Cute",
+      "priceVnd": 98000,
+      "priceMaxVnd": 125000,
+      "description": "Thú bông len nhỏ xinh, dễ thương. Các mức giá: 98.000đ, 125.000đ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/41330162976"
+    },
+    {
+      "category": "Thú len nhỏ",
+      "name": "Hà Mã Len Handmade Mặc Váy Tím - Thú Bông Hà Mã Cute",
+      "priceVnd": 175000,
+      "priceMaxVnd": null,
+      "description": "Thú bông len nhỏ xinh, dễ thương.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/47111600337"
+    },
+    {
+      "category": "Thú len nhỏ",
+      "name": "Handmade Bé Vịt Vàng Đội Mũ Quả Sồi Siêu Đáng Yêu - Thú Bông Vịt Vàng Cute",
+      "priceVnd": 95000,
+      "priceMaxVnd": null,
+      "description": "Thú bông len nhỏ xinh, dễ thương."
+    },
+    {
+      "category": "Thú len nhỏ",
+      "name": "Handmade Thú bông Stitch bằng len mềm mịn đáng yêu",
+      "priceVnd": 135000,
+      "priceMaxVnd": null,
+      "description": "Thú bông len nhỏ xinh, dễ thương.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/55907765761"
+    },
+    {
+      "category": "Thú len nhỏ",
+      "name": "Hươu Cao Cổ Crochet Handmade Siêu Dễ Thương",
+      "priceVnd": 150000,
+      "priceMaxVnd": null,
+      "description": "Thú bông len nhỏ xinh, dễ thương.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/44708469665"
+    },
+    {
+      "category": "Thú len nhỏ",
+      "name": "Mèo Đội Mũ handmade - Thú Bông Mèo Cute",
+      "priceVnd": 87000,
+      "priceMaxVnd": null,
+      "description": "Thú bông len nhỏ xinh, dễ thương.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/42179873411"
+    },
+    {
+      "category": "Thú len nhỏ",
+      "name": "Thỏ len handmade nhồi bông dễ thương",
+      "priceVnd": 98000,
+      "priceMaxVnd": null,
+      "description": "Thú bông len nhỏ xinh, dễ thương.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/51057757524"
+    },
+    {
+      "category": "Thú len nhỏ",
+      "name": "Thỏ Len Trắng Handmade Mini Cute - Thú Bông Thỏ Mặt Tròn Dễ Thương",
+      "priceVnd": 40000,
+      "priceMaxVnd": null,
+      "description": "Thú bông len nhỏ xinh, dễ thương.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/49910570997"
+    },
+    {
+      "category": "Thú len nhỏ",
+      "name": "Thú Bông Voi Hồng Len Handmade Đội Mũ Kem Ốc Quế Cute Mini",
+      "priceVnd": 250000,
+      "priceMaxVnd": null,
+      "description": "Thú bông len nhỏ xinh, dễ thương.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/56110450030"
+    },
+    {
+      "category": "Thú len nhỏ",
+      "name": "Vịt Len Handmade Cute - Mũ Beret Xanh Túi Hồng Mini Dễ Thương",
+      "priceVnd": 130000,
+      "priceMaxVnd": 135000,
+      "description": "Thú bông len nhỏ xinh, dễ thương. Các mức giá: 130.000đ, 135.000đ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/44808020684"
+    },
+    {
+      "category": "Thú len nhỏ",
+      "name": "Vịt Len Handmade Đội Nơ Vàng Cầm Dâu - Thú Bông Vịt Cute Mini Siêu Dễ Thương",
+      "priceVnd": 95000,
+      "priceMaxVnd": 98000,
+      "description": "Thú bông len nhỏ xinh, dễ thương. Các mức giá: 95.000đ, 98.000đ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/40729680932"
+    },
+    {
+      "category": "Nhân vật",
+      "name": "Búp Bê Cặp Đôi Len Handmade Cute Boy & Girl - Thú Bông Đôi Dễ Thương",
+      "priceVnd": 175000,
+      "priceMaxVnd": null,
+      "description": "Thú bông len hình nhân vật yêu thích.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/54610446126"
+    },
+    {
+      "category": "Nhân vật",
+      "name": "Chó Nghèo Len Handmade - Thú Bông Chó Áo Rách Siêu Thảm",
+      "priceVnd": 192000,
+      "priceMaxVnd": null,
+      "description": "Thú bông len hình nhân vật yêu thích.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/53360551782"
+    },
+    {
+      "category": "Nhân vật",
+      "name": "Na Tra Len Handmade - Búp Bê Thú Bông Na Tra Tóc Hai Đuôi Cute",
+      "priceVnd": 245000,
+      "priceMaxVnd": 525000,
+      "description": "Thú bông len hình nhân vật yêu thích. Các mức giá: 245.000đ, 525.000đ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/41729788493"
+    },
+    {
+      "category": "Nhân vật",
+      "name": "Người Nhện Len Handmade Treo Lưới Nhện - Thú Bông Spider-Man Cute",
+      "priceVnd": 180000,
+      "priceMaxVnd": null,
+      "description": "Thú bông len hình nhân vật yêu thích.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/45967082108"
+    },
+    {
+      "category": "Nhân vật",
+      "name": "SpongeBob & Patrick Len Handmade - Thú Bông Bọt Biển Cute",
+      "priceVnd": 158000,
+      "priceMaxVnd": null,
+      "description": "Thú bông len hình nhân vật yêu thích.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/45960475305"
+    },
+    {
+      "category": "Nhân vật",
+      "name": "Thỏ 7 màu bằng len handmake",
+      "priceVnd": 149000,
+      "priceMaxVnd": 179000,
+      "description": "Thú bông len hình nhân vật yêu thích. Các mức giá: 149.000đ, 159.000đ, 179.000đ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/27560279137"
+    },
+    {
+      "category": "Móc khóa",
+      "name": "Ấm trà bằng len handmade cute",
+      "priceVnd": 129000,
+      "priceMaxVnd": null,
+      "description": "Móc khóa len nhỏ gọn, tiện mang theo.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/56957762384"
+    },
+    {
+      "category": "Móc khóa",
+      "name": "Bé khủng long mini làm móc khoá siêu cute",
+      "priceVnd": 26000,
+      "priceMaxVnd": null,
+      "description": "Móc khóa len nhỏ gọn, tiện mang theo.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/27910318386"
+    },
+    {
+      "category": "Móc khóa",
+      "name": "Cá Đuối Len Handmade - Thú Bông Cá Đuối Nhiều Màu Cute",
+      "priceVnd": 40000,
+      "priceMaxVnd": 45000,
+      "description": "Móc khóa len nhỏ gọn, tiện mang theo. Các mức giá: 40.000đ, 45.000đ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/47959114931"
+    },
+    {
+      "category": "Móc khóa",
+      "name": "Mèo Kitty Cosplay (Gấu Dâu, Kuromi, Thỏ, Cáo) Len Handmade - Móc Khóa Hello Kitty Trang Phục",
+      "priceVnd": 175000,
+      "priceMaxVnd": 187000,
+      "description": "Móc khóa len nhỏ gọn, tiện mang theo. Các mức giá: 175.000đ, 187.000đ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/27544802121"
+    },
+    {
+      "category": "Móc khóa",
+      "name": "Móc Khóa Baby Cry Len Handmade - Bé Khóc Cute",
+      "priceVnd": 149000,
+      "priceMaxVnd": null,
+      "description": "Móc khóa len nhỏ gọn, tiện mang theo.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/49560376953"
+    },
+    {
+      "category": "Móc khóa",
+      "name": "Móc Khóa Bánh Há Cảo Len Handmade Cute - Hồng Pastel",
+      "priceVnd": 40000,
+      "priceMaxVnd": null,
+      "description": "Móc khóa len nhỏ gọn, tiện mang theo.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/50563002592"
+    },
+    {
+      "category": "Móc khóa",
+      "name": "Móc Khóa Bộ Đội, Mũ Công An Việt Nam - Móc Khóa Tổ Quốc Handmade",
+      "priceVnd": 35000,
+      "priceMaxVnd": 95000,
+      "description": "Móc khóa len nhỏ gọn, tiện mang theo. Các mức giá: 35.000đ, 57.000đ, 65.000đ, 68.000đ, 95.000đ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/48110363784"
+    },
+    {
+      "category": "Móc khóa",
+      "name": "Móc Khóa Con Lợn Biết Bay Phi Thiên Trư (Ma Đồng Giáng Thế) Len NaTra Handmade Cute",
+      "priceVnd": 150000,
+      "priceMaxVnd": null,
+      "description": "Móc khóa len nhỏ gọn, tiện mang theo.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/42532104870"
+    },
+    {
+      "category": "Móc khóa",
+      "name": "Móc Khóa Hello Kitty Cỏ 4 Lá May Mắn Len Handmade",
+      "priceVnd": 62000,
+      "priceMaxVnd": null,
+      "description": "Móc khóa len nhỏ gọn, tiện mang theo.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/53560542329"
+    },
+    {
+      "category": "Móc khóa",
+      "name": "Móc Khóa Hello Kitty Len Handmade Cute",
+      "priceVnd": 70000,
+      "priceMaxVnd": null,
+      "description": "Móc khóa len nhỏ gọn, tiện mang theo.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/45413008554"
+    },
+    {
+      "category": "Móc khóa",
+      "name": "Móc Khóa Len Mini Siêu Cute - Bạch Tuộc & Vịt Con",
+      "priceVnd": 24000,
+      "priceMaxVnd": null,
+      "description": "Móc khóa len nhỏ gọn, tiện mang theo.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/45510940373"
+    },
+    {
+      "category": "Móc khóa",
+      "name": "Móc Khóa Mèo Con Làm Tim Len Handmade Hot Hit - Vàng Nâu",
+      "priceVnd": 45000,
+      "priceMaxVnd": 50000,
+      "description": "Móc khóa len nhỏ gọn, tiện mang theo. Các mức giá: 45.000đ, 50.000đ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/45363025490"
+    },
+    {
+      "category": "Móc khóa",
+      "name": "Móc Khóa Nơ Len Handmade Nhiều Màu - Phụ Kiện Nơ Cute Siêu Dễ Thương",
+      "priceVnd": 50000,
+      "priceMaxVnd": 55000,
+      "description": "Móc khóa len nhỏ gọn, tiện mang theo. Các mức giá: 50.000đ, 55.000đ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/47308064973"
+    },
+    {
+      "category": "Móc khóa",
+      "name": "Pochacco Mũ Cà Chua Len Handmade Cute",
+      "priceVnd": 280000,
+      "priceMaxVnd": null,
+      "description": "Móc khóa len nhỏ gọn, tiện mang theo.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/57814308481"
+    },
+    {
+      "category": "Móc khóa",
+      "name": "Táo Xanh Zô Tri Len Handmade - Thú Bông Táo Cute Mini Siêu Dễ Thương",
+      "priceVnd": 80000,
+      "priceMaxVnd": 87000,
+      "description": "Móc khóa len nhỏ gọn, tiện mang theo. Các mức giá: 80.000đ, 87.000đ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/50358048836"
+    },
+    {
+      "category": "Móc khóa",
+      "name": "Trứng Bắc Thảo Len Handmade túi mù - Thú Bông Trứng Xanh Cute",
+      "priceVnd": 98000,
+      "priceMaxVnd": null,
+      "description": "Móc khóa len nhỏ gọn, tiện mang theo.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/54710542660"
+    },
+    {
+      "category": "Hoa đan móc",
+      "name": "Bó 22 Bông Hoa Hồng Len Handmade - Hoa Len Order Màu Theo Yêu Cầu",
+      "priceVnd": 499880,
+      "priceMaxVnd": null,
+      "description": "Hoa len bền đẹp, làm quà tặng.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/41980188208"
+    },
+    {
+      "category": "Hoa đan móc",
+      "name": "Bó Hoa Hướng Dương Len Handmade Size Vừa - Hoa Len Tặng Lưu Niệm, Tốt Nghiệp, Sinh Nhật",
+      "priceVnd": 250000,
+      "priceMaxVnd": null,
+      "description": "Hoa len bền đẹp, làm quà tặng.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/41681394206"
+    },
+    {
+      "category": "Hoa đan móc",
+      "name": "Handmade Hoa Sen Làm từ len - Hoa Sen Crochet Trang Trí Nội Thất Siêu Đẹp",
+      "priceVnd": 198000,
+      "priceMaxVnd": 985000,
+      "description": "Hoa len bền đẹp, làm quà tặng. Các mức giá: 198.000đ, 280.000đ, 520.000đ, 985.000đ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/29794497568"
+    },
+    {
+      "category": "Hoa đan móc",
+      "name": "Set Những Kẹp Tóc Cute Nhiều Mẫu Hot Hit Đáng Yêu - Kẹp Tóc bé gái siêu dễ thương",
+      "priceVnd": 35000,
+      "priceMaxVnd": 38000,
+      "description": "Hoa len bền đẹp, làm quà tặng. Các mức giá: 35.000đ, 38.000đ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/49012154837"
+    },
+    {
+      "category": "Phụ kiện",
+      "name": "Bao Tay Hình Chân Mèo Len Handmade - Găng Tay Mèo Cute",
+      "priceVnd": 280000,
+      "priceMaxVnd": null,
+      "description": "Phụ kiện len: kẹp tóc, găng tay, khăn.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/46616885763"
+    },
+    {
+      "category": "Phụ kiện",
+      "name": "Kẹp Tóc Cá Voi & Cá Heo Len Handmade Cute",
+      "priceVnd": 40000,
+      "priceMaxVnd": 45000,
+      "description": "Phụ kiện len: kẹp tóc, găng tay, khăn. Các mức giá: 40.000đ, 45.000đ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/56962613963"
+    },
+    {
+      "category": "Phụ kiện",
+      "name": "Kẹp Tóc Chân Mèo Len Handmade Cute - Hồng Pastel",
+      "priceVnd": 50000,
+      "priceMaxVnd": 55000,
+      "description": "Phụ kiện len: kẹp tóc, găng tay, khăn. Các mức giá: 50.000đ, 55.000đ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/49462642075"
+    },
+    {
+      "category": "Phụ kiện",
+      "name": "Kẹp Tóc len Brooch Mặt Người Hoạt Hình ngộ nghĩnh",
+      "priceVnd": 36000,
+      "priceMaxVnd": null,
+      "description": "Phụ kiện len: kẹp tóc, găng tay, khăn.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/48208012133"
+    },
+    {
+      "category": "Phụ kiện",
+      "name": "Kẹp Tóc Len Cherry Vibe Màu đỏ handmade",
+      "priceVnd": 36000,
+      "priceMaxVnd": 40000,
+      "description": "Phụ kiện len: kẹp tóc, găng tay, khăn. Các mức giá: 36.000đ, 40.000đ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/46958021859"
+    },
+    {
+      "category": "Phụ kiện",
+      "name": "Khăn Quàng Cổ Len Họa Tiết Nổi Handmade - Khăn Len Ấm Áp",
+      "priceVnd": 620000,
+      "priceMaxVnd": null,
+      "description": "Phụ kiện len: kẹp tóc, găng tay, khăn.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/45016890933"
+    },
+    {
+      "category": "Phụ kiện",
+      "name": "Set Kẹp Tóc Len Handmade Cactus & Hoa Xanh - Phụ Kiện Tóc Bé Gái Dễ Thương",
+      "priceVnd": 25000,
+      "priceMaxVnd": 35000,
+      "description": "Phụ kiện len: kẹp tóc, găng tay, khăn. Các mức giá: 25.000đ, 30.000đ, 35.000đ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/43879656581"
+    },
+    {
+      "category": "Trang trí",
+      "name": "Chậu Cây Hình Trái Tim Len Handmade - Decor Bàn Làm Việc Cute",
+      "priceVnd": 90000,
+      "priceMaxVnd": null,
+      "description": "Đồ len trang trí bàn làm việc và không gian.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/52367044672"
+    },
+    {
+      "category": "Trang trí",
+      "name": "Chậu Hoa / Cây Len Để Bàn Handmade Cute - Decor Bàn Làm Việc",
+      "priceVnd": 140000,
+      "priceMaxVnd": 185000,
+      "description": "Đồ len trang trí bàn làm việc và không gian. Các mức giá: 140.000đ, 185.000đ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/42034065023"
+    },
+    {
+      "category": "Trang trí",
+      "name": "Hộp Quà Len Couple Nhiều Ngăn - Decor Bàn Làm Việc Handmade",
+      "priceVnd": 700000,
+      "priceMaxVnd": 720000,
+      "description": "Đồ len trang trí bàn làm việc và không gian. Các mức giá: 700.000đ, 720.000đ.",
+      "shopeeUrl": "https://shopee.vn/product/491642562/49016740234"
+    }
+  ]
+}

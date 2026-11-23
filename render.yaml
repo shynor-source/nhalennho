@@ -1,0 +1,66 @@
+# Render Blueprint — backend API on the free plan (ADR-0013).
+#
+# Deploy: push this repo to GitHub, then in the Render dashboard
+# "New → Blueprint" and select the repository. Values marked `sync: false`
+# must be filled in the dashboard on first deploy (never committed).
+#
+# Free-plan notes:
+#   - The service spins down after 15 min without inbound traffic. UptimeRobot
+#     (free, 5-min GET to /api/v1/healthz — health endpoints bypass the rate
+#     limiter) keeps it awake and consumes ~720 of the 750 free hours/month.
+#   - The disk is ephemeral: uploaded images are stored in PostgreSQL
+#     (migration 0008, ADR-0013), not on disk.
+services:
+  - type: web
+    name: qg-web-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    healthCheckPath: /api/v1/healthz
+    autoDeploy: true
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: info
+      - key: HTTP_ADDR
+        value: "0.0.0.0"
+      - key: HTTP_PORT
+        value: "8080"
+      # Aiven free Postgres (always on, no card): paste the connection string
+      # with ?sslmode=require, e.g.
+      #   postgres://avnadmin:***@pg-xxx.aivencloud.com:12345/defaultdb?sslmode=require&pool_max_conns=10
+      - key: DATABASE_URL
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: SESSION_COOKIE_SECURE
+        value: "true"
+      - key: SESSION_COOKIE_SAMESITE_NONE
+        value: "true"
+      # Cross-site combo: the storefront lives on Cloudflare (*.pages.dev or
+      # a custom domain) while the API is on *.onrender.com.
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false # e.g. https://<frontend>.pages.dev
+      # Seed admin (migrate -seed). Choose a strong, unique password.
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      # Bank transfer details (public by design — shown to customers).
+      - key: BANK_CODE
+        sync: false # BIDV
+      - key: BANK_ACCOUNT_NUMBER
+        sync: false # 6320986601
+      - key: BANK_ACCOUNT_NAME
+        sync: false # NGUYEN THI NHU QUYNH
+      - key: BANK_NAME
+        sync: false
+      # Zalo Bot order notifications (bot already live in dev — same values).
+      - key: ZALO_BOT_TOKEN
+        sync: false
+      - key: ZALO_BOT_CHAT_ID
+        sync: false
+      - key: ORDER_NOTIFICATION_CHANNEL
+        value: zalo_bot

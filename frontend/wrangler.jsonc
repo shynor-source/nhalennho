@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "qg-web-frontend",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2024-09-23",
+  "compatibility_flags": [
+    "nodejs_compat",
+    "global_fetch_strictly_public"
+  ],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  }
+  // Runtime env vars (NEXT_PUBLIC_API_URL, INTERNAL_API_URL) are NOT stored
+  // here — this file is committed. Pass them at deploy time:
+  //   npx wrangler deploy --var NEXT_PUBLIC_API_URL:https://<api-host> --var INTERNAL_API_URL:https://<api-host>
+  // See docs/DEPLOY-free-combo.md.
+}
