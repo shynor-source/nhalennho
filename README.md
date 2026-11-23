@@ -1,10 +1,10 @@
 <div align="center">
 
-# 🧶 Nhà Len Nhỏ
+# 🧶 Nha Len Nho
 
-**Website thương mại điện tử cho cửa hàng đồ len handmade tại Việt Nam**
+**E-commerce website for a handmade crochet & yarn shop in Vietnam**
 
-Storefront • Giỏ hàng & thanh toán • Tài khoản khách hàng • Blog rich-text • Trang quản trị • Thông báo đơn qua Zalo Bot
+Storefront • Cart & checkout • Customer accounts • Rich-text blog • Admin panel • Zalo Bot order notifications
 
 [![Go](https://img.shields.io/badge/Go-1.27-00ADD8?logo=go&logoColor=white)](https://go.dev)
 [![Next.js](https://img.shields.io/badge/Next.js-16-000000?logo=next.js&logoColor=white)](https://nextjs.org)
@@ -17,24 +17,24 @@ Storefront • Giỏ hàng & thanh toán • Tài khoản khách hàng • Blog 
 
 ---
 
-## Giới thiệu
+## About
 
-Website bán hàng hoàn chỉnh — không phải demo — cho shop **Nhà Len Nhỏ**:
+A complete, production-ready e-commerce website — not a demo — built for the **Nha Len Nho** handmade yarn shop:
 
-- Khách đặt hàng qua giỏ hàng hoặc đặt làm riêng, thanh toán **chuyển khoản QR (VietQR)** hoặc **COD**
-- Chủ shop nhận **thông báo đơn hàng tức thì qua Zalo Bot** vào nhóm Zalo
-- Quản trị toàn bộ sản phẩm, đơn hàng, bài viết, khách hàng, đánh giá trong một trang admin
+- Customers order via cart or a custom-order form, paying by **bank-transfer QR (VietQR)** or **cash on delivery**
+- The shop owner receives **instant order notifications via Zalo Bot** into a Zalo group chat
+- Full admin panel for products, orders, blog posts, customers, and reviews
 
-Nguyên tắc thiết kế: **mọi logic nghiệp vụ và bảo mật nằm ở backend Go** — validation,
-phân quyền, rate limiting, và giá bán luôn tính từ database (client không gửi được giá).
-Frontend chỉ là lớp trình bày.
+Design principle: **all business logic and security live in the Go backend** — validation,
+authorization, rate limiting, and pricing are always computed from the database (clients
+cannot tamper with prices). The frontend is a presentation layer only.
 
-## 🧱 Kiến trúc
+## 🧱 Architecture
 
 ```
 ┌─────────────────────┐        ┌──────────────────────┐
-│   Next.js (SSR)     │  HTTP  │      Go API          │
-│   storefront/admin  │ ─────► │  chi v5 + pgx v5     │
+│   Next.js (SSR)     │  HTTP  │       Go API         │
+│   storefront/admin  │ ─────► │   chi v5 + pgx v5    │
 │   Tailwind v4       │  JSON  │  validation · auth   │
 └─────────────────────┘        │  rate limit · Zalo   │
                                └──────────┬───────────┘
@@ -45,86 +45,86 @@ Frontend chỉ là lớp trình bày.
                                └──────────────────────┘
 ```
 
-| Thành phần | Công nghệ |
+| Layer | Technology |
 |---|---|
 | Frontend | Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · Tiptap 3 |
 | Backend | Go 1.27 · chi v5 · pgx v5 · Argon2id · bluemonday |
 | Database | PostgreSQL 18 · golang-migrate |
-| Deploy | Docker · Cloudflare Workers + Render + Aiven (free combo) hoặc VPS |
+| Deployment | Docker · Cloudflare Workers + Render + Aiven (free combo) or a self-managed VPS |
 
-## ✨ Chức năng
+## ✨ Features
 
-**Khách hàng**
+**Customer**
 
-- Trang chủ, danh mục, chi tiết sản phẩm; tìm kiếm & bộ lọc (từ khóa, danh mục, màu, khoảng giá) — trạng thái lưu trên URL
-- **Tùy chọn sản phẩm** (màu / kích thước / chất liệu / đóng gói) — chênh giá do backend tính
-- Giỏ hàng (lưu trên thiết bị) + `/checkout` có **idempotency key** chống đặt trùng đơn
-- Tài khoản khách: đăng ký / đăng nhập / đổi mật khẩu / theo dõi đơn
-- Cổng đăng nhập chung tự nhận vai trò: admin → `/admin`, khách → `/account`
-- Danh sách yêu thích, đánh giá (chờ duyệt), blog, đặt làm riêng, liên hệ
-- SEO: metadata động, JSON-LD (`Store`/`Product`/`BlogPosting`), sitemap, robots
+- Home, catalog, product detail pages; search & filtering (keyword, category, color, price range) with URL-persisted state
+- **Product options** (color / size / material / packaging) with price deltas computed by the backend
+- Cart (device-local) + `/checkout` protected by an **idempotency key** against duplicate orders
+- Customer accounts: sign up / sign in / change password / order history
+- Single login gateway that auto-detects the role: admin → `/admin`, customer → `/account`
+- Wishlist, product reviews (moderated), blog, custom-order form, contact page
+- SEO: dynamic metadata, JSON-LD (`Store` / `Product` / `BlogPosting`), sitemap, robots
 
-**Quản trị**
+**Admin**
 
-- Sản phẩm: ảnh nhiều tấm (cắt vuông 1:1), tùy chọn + chênh giá, link Shopee riêng
-- Bài viết: rich text Tiptap — chèn ảnh bằng dán/kéo thả; **sanitize server-side bằng bluemonday**; hẹn giờ đăng; đăng hàng loạt
-- Đơn hàng & đặt làm riêng: đổi trạng thái, đối chiếu chuyển khoản, ghi chú nội bộ
-- Khách hàng: tìm kiếm, sửa thông tin, xóa **ẩn danh hóa** đơn hàng cũ
-- Đánh giá: duyệt / ẩn / xóa
-- Cài đặt: test Zalo Bot ("Gửi tin thử", lấy chatId)
+- Products: multiple images (built-in 1:1 crop), options with price deltas, per-product Shopee link
+- Blog: Tiptap rich text — paste/drag images; content is **sanitized server-side with bluemonday**; scheduled and bulk publishing
+- Orders & custom orders: status workflow, transfer reconciliation, internal notes
+- Customers: search, contact editing, deletion that **anonymizes** past orders
+- Reviews: approve / hide / delete
+- Settings: Zalo Bot test send & chat discovery
 
-**Thông báo Zalo Bot**
+**Zalo Bot notifications**
 
-- Đơn mới (checkout & đặt nhanh), khách báo chuyển khoản, yêu cầu đặt làm riêng → đẩy vào nhóm Zalo
-- Gửi bất đồng bộ — Zalo chậm/lỗi không bao giờ làm khách đặt hàng thất bại
-- Dùng nền tảng **Zalo Bot chính thức** (miễn phí), không phải unofficial API
+- New orders (checkout & quick-order), transfer reports, and custom-order requests → pushed to the owner's Zalo group
+- Sent asynchronously — a slow or failing Zalo API never blocks a customer's checkout
+- Built on the **official Zalo Bot platform** (free), not an unofficial API
 
-## 🚀 Chạy local (development)
+## 🚀 Local development
 
 ```bash
-cp .env.example .env.dev           # điền giá trị thật cho các biến TODO(owner)
+cp .env.example .env.dev           # fill in real values for the TODO(owner) vars
 docker compose --env-file .env.dev -f compose.dev.yml up --build
 ```
 
-Lần chạy đầu tự động: khởi động PostgreSQL → chạy migrations + seed dữ liệu mẫu →
-tạo tài khoản admin từ `ADMIN_EMAIL` / `ADMIN_PASSWORD` (**không có mật khẩu mặc
-định cứng** — tự đặt và giữ bí mật).
+On first run the stack automatically: starts PostgreSQL → applies migrations and seeds
+sample data → creates the admin account from `ADMIN_EMAIL` / `ADMIN_PASSWORD`
+(**no hard-coded default password** — set your own and keep it secret).
 
-| Địa chỉ | |
+| Endpoint | |
 |---|---|
 | Website | http://localhost:3000 |
 | API | http://localhost:8080/healthz |
-| Trang quản trị | http://localhost:3000/admin |
+| Admin panel | http://localhost:3000/admin |
 
-## 🔒 Bảo mật
+## 🔒 Security
 
-- Mật khẩu hash **Argon2id** (OWASP parameters); session token chỉ lưu dạng SHA-256 hash, thu hồi khi đổi mật khẩu
-- CSRF (Origin check + token) cho mọi request thay đổi trạng thái; cookie `HttpOnly`/`Secure`/`SameSite`
-- CORS allowlist cứng (chặn wildcard); CSP chặt ở cả frontend và API
-- Rate limiting nhiều lớp theo IP (global / login / form) + throttle thất bại theo tài khoản; limiter tự dọn bucket chống memory-DoS
-- RealIP chỉ tin proxy trong `TRUSTED_PROXY_CIDRS` — chống giả mạo `X-Forwarded-For`
-- Upload ảnh: chỉ admin, decode lại (không tin extension), re-encode xóa metadata, tên file random hex, lưu trong database
-- Mật khẩu mẫu/dễ đoán bị từ chối khi seed và khi đổi mật khẩu
-- Kiểm định một lệnh: `./scripts/security-checks.sh` (vet · test · govulncheck · gosec · typecheck · lint · audit · quét secret)
+- Passwords hashed with **Argon2id** (OWASP parameters); session tokens stored as SHA-256 hashes, revoked on password change
+- CSRF protection (Origin check + token) on every state-changing request; `HttpOnly` / `Secure` / `SameSite` cookies
+- Strict CORS allowlist (wildcard rejected); strict CSP on both the frontend and the API
+- Layered per-IP rate limiting (global / login / public forms) plus per-account failure throttling; the limiter evicts expired buckets to resist memory-exhaustion DoS
+- Hardened RealIP: proxy headers are trusted only from `TRUSTED_PROXY_CIDRS` — resists `X-Forwarded-For` spoofing
+- Image uploads: admin-only, decoded (extension never trusted), re-encoded to strip metadata, random-hex filenames, stored in the database
+- Sample/guessable passwords are rejected at seed time and on password change
+- One-command verification: `./scripts/security-checks.sh` (vet · test · govulncheck · gosec · typecheck · lint · audit · secret scan)
 
-## ☁️ Triển khai production
+## ☁️ Production deployment
 
-Hai phương án đều đã chuẩn bị sẵn trong repo:
+Two deployment paths are prepared in the repo:
 
-| | Free combo (đang dùng) | VPS tự quản |
+| | Free combo (in use) | Self-managed VPS |
 |---|---|---|
-| Frontend | Cloudflare Workers (OpenNext) | Docker trên VPS |
-| Backend | Render (free) + keep-alive ping | Docker trên VPS |
+| Frontend | Cloudflare Workers (OpenNext) | Docker on a VPS |
+| Backend | Render (free) + keep-alive ping | Docker on a VPS |
 | Database | Aiven free PostgreSQL | Docker volume |
-| Chi phí | **0 USD/tháng** | ~2 USD/tháng |
-| Cấu hình | `render.yaml` + `frontend/wrangler.jsonc` | `compose.prod.yml` |
+| Cost | **$0/month** | ~$2/month |
+| Configuration | `render.yaml` + `frontend/wrangler.jsonc` | `compose.prod.yml` |
 
-Đường VPS: không publish cổng host nào, PostgreSQL chỉ nằm trên mạng nội bộ,
-containers chạy non-root, service `migrate` chạy migration trước backend.
-Backup/khôi phục: `./scripts/backup.sh` · `./scripts/restore-db.sh` ·
-cập nhật an toàn: `./scripts/prod-update.sh`.
+The VPS path publishes no host ports, keeps PostgreSQL on a private Docker network,
+runs containers as non-root, and applies migrations before the API starts.
+Backup/restore: `./scripts/backup.sh` · `./scripts/restore-db.sh` · safe updates:
+`./scripts/prod-update.sh`.
 
-## 📁 Cấu trúc dự án
+## 📁 Project layout
 
 ```
 frontend/               Next.js App Router
@@ -134,23 +134,21 @@ frontend/               Next.js App Router
 backend/
   cmd/api · cmd/migrate binaries
   internal/
-    handler/            HTTP routes (router.go liệt kê tất cả)
-    service/            nghiệp vụ đơn hàng, thông báo Zalo Bot
-    repository/         truy vấn pgx parameterized
-    auth/               Argon2id + từ chối mật khẩu yếu
-    middleware/         CORS, rate limit, RealIP hardened
-    media/              validate + re-encode ảnh upload
-    sanitize/           allowlist HTML cho blog (bluemonday)
+    handler/            HTTP routes (router.go lists everything)
+    service/            order logic, Zalo Bot notifier
+    repository/         parameterized pgx queries
+    auth/               Argon2id + weak-password rejection
+    middleware/         CORS, rate limiting, hardened RealIP
+    media/              upload validation + re-encoding
+    sanitize/           blog HTML allowlist (bluemonday)
     db/                 migrations + seed
 scripts/                backup · restore · prod-update · security-checks
-render.yaml             Blueprint deploy backend (Render)
+render.yaml             Backend blueprint (Render)
 ```
 
-## ⚙️ Biến môi trường
+## ⚙️ Environment variables
 
-- Mẫu đầy đủ với placeholder: [`.env.example`](.env.example)
-- File env thật (`.env.dev`, `.env.production`, `.env.cloudflare`) **không bao giờ commit**
-- `NEXT_PUBLIC_*` được nhúng vào bundle trình duyệt — chỉ chứa giá trị công khai
-- Bí mật chỉ nằm ở server: `DATABASE_URL`, `SESSION_SECRET`, `ADMIN_PASSWORD`, `ZALO_BOT_TOKEN`, chuỗi kết nối DB
-
-</div>
+- Full template with placeholders: [`.env.example`](.env.example)
+- Real env files (`.env.dev`, `.env.production`, `.env.cloudflare`) are **never committed**
+- `NEXT_PUBLIC_*` values are inlined into the browser bundle — public values only
+- Secrets live server-side only: `DATABASE_URL`, `SESSION_SECRET`, `ADMIN_PASSWORD`, `ZALO_BOT_TOKEN`, the DB connection string
