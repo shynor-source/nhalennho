@@ -95,10 +95,10 @@ func ValidateProductOptions(opts []model.ProductOption) ([]model.ProductOption, 
 			return nil, fmt.Errorf("%w: loại đặc điểm bị lặp", ErrOptionValidation)
 		}
 		seenKind[o.Kind] = true
-		if o.Kind == model.OptionKindPackaging {
-			continue // managed by EnsurePackagingOption
-		}
 		if len(o.Values) == 0 {
+			if o.Kind == model.OptionKindPackaging {
+				continue // empty packaging keeps the managed defaults
+			}
 			return nil, fmt.Errorf("%w: đặc điểm %s cần ít nhất 1 lựa chọn", ErrOptionValidation, o.Kind)
 		}
 		if len(o.Values) > maxValuesPerOption {
@@ -126,9 +126,9 @@ func ValidateProductOptions(opts []model.ProductOption) ([]model.ProductOption, 
 	return out, nil
 }
 
-// SaveProductOptions replaces the product's option axes atomically. The
-// packaging axis is preserved/created with defaults; other kinds are fully
-// replaced by the validated input.
+// SaveProductOptions replaces the product's option axes atomically. Packaging
+// values are replaced as well when the admin supplies them (e.g. add a paid
+// gift-wrap tier); an empty packaging list restores the managed defaults.
 func (db *DB) SaveProductOptions(ctx context.Context, productID int64, opts []model.ProductOption) error {
 	tx, err := db.Pool.Begin(ctx)
 	if err != nil {

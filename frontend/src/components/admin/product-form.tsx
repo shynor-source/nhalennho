@@ -34,6 +34,12 @@ export function ProductForm({ initial, onSaved }: Props) {
   const [optionState, setOptionState] = useState<OptionsState>(() =>
     optionsStateFromProduct(initial?.options),
   );
+  // Controlled category selection. The uncontrolled `defaultValue` approach
+  // broke edits: the <select> mounted before the async category list arrived,
+  // so reopening an edit form always showed "Không chọn" and saving erased the
+  // product's existing category. Value stays null until the user changes it,
+  // so an empty categories list can never silently wipe the stored value.
+  const [categoryId, setCategoryId] = useState<string | null>(null);
 
   useEffect(() => {
     publicApi.listCategories().then((res) => {
@@ -74,6 +80,7 @@ export function ProductForm({ initial, onSaved }: Props) {
     initial?.category != null
       ? categories.find((c) => c.slug === initial.category?.slug)?.id
       : undefined;
+  const selectedCategoryId = categoryId ?? (initialCategoryId != null ? String(initialCategoryId) : "");
 
   function advanceCrop() {
     const next = pendingRef.current.shift();
@@ -173,7 +180,8 @@ export function ProductForm({ initial, onSaved }: Props) {
           <select
             id="p-category"
             name="categoryId"
-            defaultValue={initialCategoryId ? String(initialCategoryId) : ""}
+            value={selectedCategoryId}
+            onChange={(e) => setCategoryId(e.target.value)}
             className={fieldClass}
           >
             <option value="">Không chọn</option>

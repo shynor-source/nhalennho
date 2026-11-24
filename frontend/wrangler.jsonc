@@ -11,6 +11,10 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
+  "routes": [
+    { "pattern": "nhalennho.site", "custom_domain": true },
+    { "pattern": "www.nhalennho.site", "custom_domain": true }
+  ],
   "observability": {
     "enabled": true
   }

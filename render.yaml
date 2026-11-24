@@ -17,7 +17,7 @@ services:
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
     plan: free
-    healthCheckPath: /api/v1/healthz
+    healthCheckPath: /healthz
     autoDeploy: true
     envVars:
       - key: APP_ENV
