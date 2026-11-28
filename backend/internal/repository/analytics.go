@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
 )
 
@@ -40,9 +41,26 @@ type AnalyticsSummary struct {
 	TopFavorited []ProductHit `json:"topFavorited"`
 }
 
-// RecordPageView bumps today's storefront page-view counter.
-func (db *DB) RecordPageView(ctx context.Context) error {
-	_, err := db.Pool.Exec(ctx, `
+// RecordPageView counts today's storefront page view for a visitor hash.
+// Owner rule (2026-11-28): one view per IP per day — the daily counter only
+// increments when the (day, ip_hash) pair is new. Repeat visits by the same
+// visitor the same day are ignored.
+func (db *DB) RecordPageView(ctx context.Context, ipHash string) error {
+	if ipHash == "" {
+		return fmt.Errorf("empty visitor hash")
+	}
+	var inserted int
+	err := db.Pool.QueryRow(ctx, `
+		INSERT INTO page_visitor_days (day, ip_hash) VALUES (CURRENT_DATE, $1)
+		ON CONFLICT (day, ip_hash) DO NOTHING
+		RETURNING 1`, ipHash).Scan(&inserted)
+	if errors.Is(err, pgx.ErrNoRows) {
+		return nil // already counted today
+	}
+	if err != nil {
+		return fmt.Errorf("record visitor day: %w", err)
+	}
+	_, err = db.Pool.Exec(ctx, `
 		INSERT INTO page_views_daily (day, hits) VALUES (CURRENT_DATE, 1)
 		ON CONFLICT (day) DO UPDATE SET hits = page_views_daily.hits + 1`)
 	if err != nil {
@@ -51,24 +69,48 @@ func (db *DB) RecordPageView(ctx context.Context) error {
 	return nil
 }
 
-// RecordProductEvent bumps today's counter for a product-scoped event
-// ("product_view" or "wishlist_add" — table chosen by the caller).
+// dedupeTables maps an event table to its per-visitor dedup table.
+var dedupeTables = map[string]string{
+	"product_views_daily":     "product_view_visitor_days",
+	"product_favorites_daily": "product_fav_visitor_days",
+}
+
+// RecordProductEvent counts a product-scoped event ("product_view" or
+// "wishlist_add") for a visitor hash: once per (day, product, visitor).
 // Unknown product IDs are reported as ErrNotFound.
-func (db *DB) RecordProductEvent(ctx context.Context, table string, productID int64) error {
-	if table != "product_views_daily" && table != "product_favorites_daily" {
+func (db *DB) RecordProductEvent(ctx context.Context, table string, productID int64, ipHash string) error {
+	dedupe, ok := dedupeTables[table]
+	if !ok {
 		return fmt.Errorf("unknown analytics table %q", table)
 	}
-	_, err := db.Pool.Exec(ctx, fmt.Sprintf(`
-		INSERT INTO %s (day, product_id, hits) VALUES (CURRENT_DATE, $1, 1)
-		ON CONFLICT (day, product_id) DO UPDATE SET hits = %s.hits + 1`, table, table), // #nosec G705 -- table from a fixed internal allowlist
-		productID)
+	if ipHash == "" {
+		return fmt.Errorf("empty visitor hash")
+	}
+	var inserted int
+	err := db.Pool.QueryRow(ctx, fmt.Sprintf(`
+		INSERT INTO %s (day, product_id, ip_hash) VALUES (CURRENT_DATE, $1, $2)
+		ON CONFLICT (day, product_id, ip_hash) DO NOTHING
+		RETURNING 1`, dedupe), // #nosec G705 -- table from a fixed internal allowlist
+		productID, ipHash).Scan(&inserted)
+	if errors.Is(err, pgx.ErrNoRows) {
+		return nil // already counted today
+	}
 	if err != nil {
 		var pgErr *pgconn.PgError
 		if errors.As(err, &pgErr) && pgErr.Code == "23503" { // foreign_key_violation
 			return ErrNotFound
 		}
+		return fmt.Errorf("record visitor day: %w", err)
+	}
+	_, err = db.Pool.Exec(ctx, fmt.Sprintf(`
+		INSERT INTO %s (day, product_id, hits) VALUES (CURRENT_DATE, $1, 1)
+		ON CONFLICT (day, product_id) DO UPDATE SET hits = %s.hits + 1`, table, table), // #nosec G705 -- table from a fixed internal allowlist
+		productID)
+	if err != nil {
 		return fmt.Errorf("record product event (%s): %w", table, err)
 	}
+	// Best-effort pruning: dedup rows are only useful for a few days.
+	_, _ = db.Pool.Exec(ctx, fmt.Sprintf(`DELETE FROM %s WHERE day < CURRENT_DATE - 3`, dedupe)) // #nosec G705 -- allowlist
 	return nil
 }
 

@@ -1,13 +1,32 @@
 package handler
 
 import (
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
+	"fmt"
 	"log/slog"
 	"net/http"
 	"strconv"
+	"time"
 
+	"github.com/qg/web/backend/internal/middleware"
 	"github.com/qg/web/backend/internal/repository"
 )
+
+// visitorHash derives the daily, privacy-safe visitor key (ADR-0015 still
+// holds: the raw IP is never stored). HMAC(key=server secret, msg=day|ip)
+// rotates per day, so the same IP cannot be linked across days, and the
+// server-side secret prevents clients from forging hashes.
+func (s *Server) visitorHash(r *http.Request) string {
+	ip := middleware.ClientIP(r)
+	day := time.Now().UTC().Format("2006-01-02")
+	mac := hmac.New(sha256.New, []byte(s.cfg.SessionSecret))
+	fmt.Fprint(mac, day, "|", ip)
+	digest := mac.Sum(nil)
+	return hex.EncodeToString(digest[:8]) // 64-bit hash is ample for daily dedup
+}
 
 // eventKind identifies the anonymous storefront event kinds. Product-scoped
 // kinds bump per-product counters; page_view bumps the site-wide one.
@@ -31,9 +50,16 @@ func (s *Server) recordEvent(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNoContent)
 		return
 	}
+	// Cheap bot heuristic: well-behaved crawlers keep this header; browsers
+	// always send it with fetch(). Misses some bots, catches many — best effort.
+	if r.Header.Get("X-Requested-With") == "" {
+		w.WriteHeader(http.StatusNoContent)
+		return
+	}
+	ipHash := s.visitorHash(r)
 	switch body.Kind {
 	case eventPageView:
-		if err := s.db.RecordPageView(r.Context()); err != nil {
+		if err := s.db.RecordPageView(r.Context(), ipHash); err != nil {
 			s.logger.Warn("analytics page_view failed", slog.Any("error", err))
 		}
 	case eventProductView, eventFavoriteAdd:
@@ -45,7 +71,7 @@ func (s *Server) recordEvent(w http.ResponseWriter, r *http.Request) {
 		if body.Kind == eventFavoriteAdd {
 			table = "product_favorites_daily"
 		}
-		if err := s.db.RecordProductEvent(r.Context(), table, body.ProductID); err != nil &&
+		if err := s.db.RecordProductEvent(r.Context(), table, body.ProductID, ipHash); err != nil &&
 			!isAnalyticsNotFound(err) {
 			s.logger.Warn("analytics product event failed",
 				slog.String("kind", body.Kind),
