@@ -14,7 +14,10 @@ const RANGES = [
 const fmt = new Intl.NumberFormat("vi-VN");
 
 function labelForDay(day: string): string {
-  const d = new Date(`${day}T00:00:00`);
+  // The API serialises dates as RFC3339 ("2026-11-28T00:00:00Z"); keep only
+  // the YYYY-MM-DD part or new Date() yields Invalid Date.
+  const d = new Date(`${day.slice(0, 10)}T00:00:00`);
+  if (Number.isNaN(d.getTime())) return day;
   return d.toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit" });
 }
 
@@ -34,11 +37,12 @@ function DailyChart({ series }: { series: AnalyticsSummary["series"] }) {
       {points.map((point) => (
         <div
           key={point.day}
-          className="group relative flex h-full flex-1 items-end"
+          className="group relative flex h-full min-w-0 flex-1 items-end"
           title={`${labelForDay(point.day)}: ${fmt.format(point.hits)} lượt xem`}
         >
+          {/* Cap the bar width so a single data point never fills the chart. */}
           <div
-            className="w-full rounded-t-control bg-rose-soft/70 transition-colors group-hover:bg-rose-deep"
+            className="mx-auto w-full max-w-8 rounded-t-[var(--radius-control)] bg-rose-soft/70 transition-colors group-hover:bg-rose-deep"
             style={{ height: `${Math.max((point.hits / max) * 100, 2)}%` }}
           />
         </div>
@@ -167,33 +171,40 @@ export default function AnalyticsPage() {
         </p>
       ) : null}
 
-      {/* KPI cards — one metric per card, values compared side by side. */}
+      {/* KPI cards — one metric per card; the label area has a fixed height
+          so all big numbers sit on the same baseline even when a label wraps. */}
       <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {summary ? (
           <>
-            <div className="rounded-card border border-line bg-white p-6">
-              <p className="text-sm text-muted">Lượt xem web hôm nay</p>
-              <p className="mt-2 font-display text-3xl text-ink">
+            <div className="flex h-28 flex-col rounded-card border border-line bg-white p-6">
+              <p className="text-sm leading-snug text-muted">
+                Lượt xem web hôm nay
+              </p>
+              <p className="mt-auto font-display text-3xl text-ink">
                 {fmt.format(summary.siteViews.today)}
               </p>
             </div>
-            <div className="rounded-card border border-line bg-white p-6">
-              <p className="text-sm text-muted">
+            <div className="flex h-28 flex-col rounded-card border border-line bg-white p-6">
+              <p className="text-sm leading-snug text-muted">
                 Lượt xem web trong {days} ngày
               </p>
-              <p className="mt-2 font-display text-3xl text-ink">
+              <p className="mt-auto font-display text-3xl text-ink">
                 {fmt.format(summary.siteViews.window)}
               </p>
             </div>
-            <div className="rounded-card border border-line bg-white p-6">
-              <p className="text-sm text-muted">Lượt thích hôm nay</p>
-              <p className="mt-2 font-display text-3xl text-ink">
+            <div className="flex h-28 flex-col rounded-card border border-line bg-white p-6">
+              <p className="text-sm leading-snug text-muted">
+                Lượt thích hôm nay
+              </p>
+              <p className="mt-auto font-display text-3xl text-ink">
                 {fmt.format(summary.favorites.today)}
               </p>
             </div>
-            <div className="rounded-card border border-line bg-white p-6">
-              <p className="text-sm text-muted">Lượt thích trong {days} ngày</p>
-              <p className="mt-2 font-display text-3xl text-ink">
+            <div className="flex h-28 flex-col rounded-card border border-line bg-white p-6">
+              <p className="text-sm leading-snug text-muted">
+                Lượt thích trong {days} ngày
+              </p>
+              <p className="mt-auto font-display text-3xl text-ink">
                 {fmt.format(summary.favorites.window)}
               </p>
             </div>
