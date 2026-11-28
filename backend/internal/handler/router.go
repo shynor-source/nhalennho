@@ -88,6 +88,7 @@ func (s *Server) Routes() http.Handler {
 		r.Get("/products", s.listProducts)
 		r.Get("/products/{slug}", s.getProduct)
 		r.Get("/colors", s.listColors)
+		r.Post("/events", s.recordEvent)
 		r.Get("/posts", s.listPosts)
 		r.Get("/posts/{slug}", s.getPost)
 
@@ -146,6 +147,7 @@ func (s *Server) Routes() http.Handler {
 				r.Put("/posts/{id}", s.adminUpdatePost)
 				r.Delete("/posts/{id}", s.adminDeletePost)
 
+				r.Get("/analytics", s.adminAnalytics)
 				r.Get("/products", s.adminListProducts)
 				r.Post("/products", s.adminCreateProduct)
 				r.Get("/products/{id}", s.adminGetProduct)

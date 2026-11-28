@@ -2,7 +2,13 @@
 
 import { useSyncExternalStore } from "react";
 
-export type WishlistItem = { slug: string; name: string; priceVnd: number };
+export type WishlistItem = {
+  slug: string;
+  name: string;
+  priceVnd: number;
+  /** Present on current data — used for anonymous favorite analytics. */
+  productId?: number;
+};
 
 const STORAGE_KEY = "nhallennho:wishlist:v1";
 export const WISHLIST_EVENT = "nhallennho:wishlist";
@@ -66,7 +72,14 @@ export function toggleWishlist(item: WishlistItem): boolean {
     ? items.filter((x) => x.slug !== item.slug)
     : [...items, item];
   commit(next);
-  return !exists;
+  const added = !exists;
+  if (added && item.productId != null) {
+    // Count "add" actions only (ADR-0015); removals are not a like signal.
+    void import("@/lib/analytics").then((m) =>
+      m.trackEvent("wishlist_add", item.productId),
+    );
+  }
+  return added;
 }
 
 export function useWishlist() {

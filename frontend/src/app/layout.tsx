@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Be_Vietnam_Pro, Lora } from "next/font/google";
 
 import { FloatingContact } from "@/components/floating-contact";
+import { PageViewTracker } from "@/components/page-view-tracker";
 import { PageTransition } from "@/components/page-transition";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { SiteFooter } from "@/components/site-footer";
@@ -57,6 +58,7 @@ export default function RootLayout({
   return (
     <html lang="vi" className={`${lora.variable} ${beVietnamPro.variable}`}>
       <body className="flex min-h-dvh flex-col bg-cream text-ink">
+        <PageViewTracker />
         <ScrollToTop />
         <a
           href="#main"

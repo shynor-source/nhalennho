@@ -36,6 +36,21 @@ export async function uploadProductImage(
   }
 }
 
+export type AnalyticsProductHit = {
+  productId: number;
+  name: string;
+  slug: string;
+  hits: number;
+};
+
+export type AnalyticsSummary = {
+  siteViews: { today: number; window: number };
+  favorites: { today: number; window: number };
+  series: { day: string; hits: number }[];
+  topViewed: AnalyticsProductHit[];
+  topFavorited: AnalyticsProductHit[];
+};
+
 async function request<T>(
   path: string,
   options: { method?: string; body?: unknown; admin?: boolean } = {},
@@ -106,6 +121,8 @@ export const adminApi = {
       { admin: true },
     ),
   stats: () => request<Record<string, number>>("/admin/stats", { admin: true }),
+  analytics: (days: number) =>
+    request<AnalyticsSummary>(`/admin/analytics?days=${days}`, { admin: true }),
   listProducts: (query = "") =>
     request<{ items: unknown[]; total: number }>(
       `/admin/products${query ? `?${query}` : ""}`,

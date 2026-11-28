@@ -8,6 +8,7 @@ import { adminApi, setCsrfToken } from "@/lib/api-client";
 
 const navItems = [
   { href: "/admin", label: "Tổng quan" },
+  { href: "/admin/analytics", label: "Thống kê" },
   { href: "/admin/products", label: "Sản phẩm" },
   { href: "/admin/posts", label: "Bài viết" },
   { href: "/admin/orders", label: "Đơn hàng" },

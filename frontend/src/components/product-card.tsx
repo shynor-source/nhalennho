@@ -31,6 +31,7 @@ export function ProductCard({ product }: { product: Product }) {
               slug: product.slug,
               name: product.name,
               priceVnd: product.priceVnd,
+              productId: product.id,
             }}
           />
         </div>

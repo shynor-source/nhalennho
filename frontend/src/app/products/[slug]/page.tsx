@@ -5,6 +5,7 @@ import { MessageCircle } from "lucide-react";
 
 import { AddToCart } from "@/components/add-to-cart";
 import { ShopeeIcon } from "@/components/brand-icons";
+import { ProductViewTracker } from "@/components/page-view-tracker";
 import { ProductGallery } from "@/components/product-gallery";
 import { ReviewForm } from "@/components/review-form";
 import { StarRating } from "@/components/star-rating";
@@ -110,6 +111,7 @@ export default async function ProductPage({ params }: PageProps) {
                 slug: product.slug,
                 name: product.name,
                 priceVnd: product.priceVnd,
+                productId: product.id,
               }}
             />
           </div>
@@ -175,6 +177,7 @@ export default async function ProductPage({ params }: PageProps) {
           </div>
 
           <div className="mt-8"><AddToCart product={product} /></div>
+          <ProductViewTracker productId={product.id} />
         </div>
       </div>
 
