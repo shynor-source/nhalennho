@@ -83,14 +83,17 @@ func (db *DB) Analytics(ctx context.Context, days int) (*AnalyticsSummary, error
 	}
 	s := &AnalyticsSummary{}
 
+	// Every scalar query takes exactly one $1 window ("today" == window 1:
+	// day > CURRENT_DATE - 1 includes only today). Mismatched placeholder
+	// counts caused a 500 on the first deployment of this endpoint.
 	scans := []struct {
 		query  string
 		window int
 		dest   *int64
 	}{
-		{`SELECT COALESCE(SUM(hits),0) FROM page_views_daily WHERE day = CURRENT_DATE`, 1, &s.SiteViews.Today},
+		{`SELECT COALESCE(SUM(hits),0) FROM page_views_daily WHERE day > CURRENT_DATE - $1::int`, 1, &s.SiteViews.Today},
 		{`SELECT COALESCE(SUM(hits),0) FROM page_views_daily WHERE day > CURRENT_DATE - $1::int`, days, &s.SiteViews.Window},
-		{`SELECT COALESCE(SUM(hits),0) FROM product_favorites_daily WHERE day = CURRENT_DATE`, 1, &s.Favorites.Today},
+		{`SELECT COALESCE(SUM(hits),0) FROM product_favorites_daily WHERE day > CURRENT_DATE - $1::int`, 1, &s.Favorites.Today},
 		{`SELECT COALESCE(SUM(hits),0) FROM product_favorites_daily WHERE day > CURRENT_DATE - $1::int`, days, &s.Favorites.Window},
 	}
 	for i, sc := range scans {

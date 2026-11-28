@@ -54,7 +54,9 @@ const nextConfig: NextConfig = {
     const isDev = process.env.NODE_ENV !== "production";
 
     const connectSrc = ["'self'", apiOrigin];
-    const scriptSrc = ["'self'", "'unsafe-inline'"];
+    // Cloudflare injects its Web Analytics beacon into served HTML; allow it
+    // explicitly or the CSP blocks it in the browser console.
+    const scriptSrc = ["'self'", "'unsafe-inline'", "https://static.cloudflareinsights.com"];
     const imgSrc = ["'self'", "data:", "blob:", "https:"];
     if (isDev) {
       // Next.js dev/Turbopack needs eval() (React debug callstacks) and a
