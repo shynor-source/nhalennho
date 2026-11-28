@@ -29,11 +29,20 @@ export function AddToCart({ product }: { product: Product }) {
     kind: o.kind,
     value: selected[o.kind] ?? "",
   }));
-  const delta = (product.options ?? []).reduce((sum, o) => {
-    const value = o.values.find((v) => v.value === selected[o.kind]);
-    return sum + (value?.priceDeltaVnd ?? 0);
-  }, 0);
-  const unitPrice = product.priceVnd + delta;
+  // Price semantics (ADR-0014): a non-packaging value's price REPLACES the
+  // base price (highest priced axis wins); packaging is an add-on delta.
+  let variantBase: number | null = null;
+  let packagingDelta = 0;
+  for (const option of product.options ?? []) {
+    const value = option.values.find((v) => v.value === selected[option.kind]);
+    if (!value?.priceDeltaVnd) continue;
+    if (option.kind === "packaging") {
+      packagingDelta += value.priceDeltaVnd;
+    } else {
+      variantBase = Math.max(variantBase ?? 0, value.priceDeltaVnd);
+    }
+  }
+  const unitPrice = (variantBase ?? product.priceVnd) + packagingDelta;
 
   function pick(kind: string, value: string) {
     setSelected((prev) => ({ ...prev, [kind]: value }));
@@ -67,9 +76,14 @@ export function AddToCart({ product }: { product: Product }) {
           <div className="flex flex-wrap gap-2" role="radiogroup" aria-label={labels[option.kind] ?? option.kind}>
             {option.values.map((value) => {
               const active = selected[option.kind] === value.value;
+              // Packaging stays an add-on ("+đ"); other kinds REPLACE the
+              // base price, so show their absolute price instead.
+              const isPackaging = option.kind === "packaging";
               const suffix =
                 value.priceDeltaVnd && value.priceDeltaVnd > 0
-                  ? ` (+${new Intl.NumberFormat("vi-VN").format(value.priceDeltaVnd)}đ)`
+                  ? isPackaging
+                    ? ` (+${new Intl.NumberFormat("vi-VN").format(value.priceDeltaVnd)}đ)`
+                    : ` (${new Intl.NumberFormat("vi-VN").format(value.priceDeltaVnd)}đ)`
                   : "";
               return (
                 <button

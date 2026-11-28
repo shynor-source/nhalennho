@@ -118,7 +118,9 @@ export function OptionEditor({ state, onChange }: Props) {
                 onChange={(e) => update(kind, { hasPrice: e.target.checked })}
                 className="size-4 accent-[#8a4b57]"
               />
-              Các lựa chọn này có giá khác nhau
+              {locked
+                ? "Các lựa chọn này có giá khác nhau (cộng thêm vào giá gốc)"
+                : "Mỗi lựa chọn có giá riêng (thay thế giá gốc)"}
             </label>
           ) : null}
         </div>
@@ -146,7 +148,7 @@ export function OptionEditor({ state, onChange }: Props) {
                       min={0}
                       step={1000}
                       value={entry.prices[i] ?? ""}
-                      placeholder="Giá thêm (đ)"
+                      placeholder={locked ? "Giá thêm (đ)" : "Giá (đ)"}
                       onChange={(e) => {
                         const prices = [...entry.prices];
                         prices[i] = e.target.value;

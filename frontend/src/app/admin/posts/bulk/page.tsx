@@ -37,7 +37,11 @@ export default function BulkPostsPage() {
     if (submitting) return;
     const data = new FormData(event.currentTarget);
     const startAtRaw = String(data.get("startAt") ?? "");
-    const intervalHours = Number(data.get("intervalHours") ?? 24);
+    // The schedule spacing is expressed in DAYS (owner mental model); the API
+    // still speaks hours. Previously the field was raw hours and the owner
+    // typed "8" meaning 8 days — posts then all published within ~2 days.
+    const intervalDays = Number(data.get("intervalDays") ?? 1);
+    const intervalHours = Math.round(intervalDays * 24);
 
     if (parsed.length === 0) {
       setError("Chưa có bài viết nào. Mỗi bài bắt đầu bằng tiêu đề ở dòng đầu.");
@@ -114,15 +118,15 @@ export default function BulkPostsPage() {
           </div>
           <div>
             <label htmlFor="bulk-interval" className="mb-1 block text-sm text-muted">
-              Cách nhau (giờ)
+              Cách nhau (ngày)
             </label>
             <input
               id="bulk-interval"
-              name="intervalHours"
+              name="intervalDays"
               type="number"
               min={1}
-              max={720}
-              defaultValue={24}
+              max={30}
+              defaultValue={1}
               required
               className={fieldClass}
             />

@@ -108,7 +108,9 @@ func (s *OrderService) buildItems(ctx context.Context, raw []OrderItemInput) ([]
 		if !product.IsActive {
 			return nil, 0, invalid("sản phẩm đã ngừng bán")
 		}
-		options, delta, err := s.repo.ResolveSelectedOptions(ctx, product.ID, item.Options)
+		// Price semantics (ADR-0014): a non-packaging value's stored price is
+		// the ABSOLUTE variant price (replaces the base); packaging is additive.
+		options, variantBase, packagingDelta, err := s.repo.ResolveSelectedOptions(ctx, product.ID, item.Options)
 		if errors.Is(err, repository.ErrNotFound) {
 			return nil, 0, invalid("đặc điểm không hợp lệ cho sản phẩm trong đơn")
 		}
@@ -118,8 +120,12 @@ func (s *OrderService) buildItems(ctx context.Context, raw []OrderItemInput) ([]
 		if options == nil {
 			options = []model.SelectedOption{}
 		}
+		base := product.PriceVND
+		if variantBase > 0 {
+			base = variantBase
+		}
 		id := product.ID
-		unit := product.PriceVND + delta
+		unit := base + packagingDelta
 		items = append(items, model.OrderItem{
 			ProductID:    &id,
 			ProductName:  product.Name,

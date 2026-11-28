@@ -82,6 +82,10 @@ func (db *DB) ListProductOptions(ctx context.Context, productID int64) ([]model.
 	return out, nil
 }
 
+// ResolveSelectedOptions validates the customer's picks against the product's
+// option axes; see the doc comment above the implementation for the price
+// semantics.
+//
 // ValidateProductOptions checks admin-provided option axes and returns the
 // normalized set. Packaging is handled separately (EnsurePackagingOption).
 func ValidateProductOptions(opts []model.ProductOption) ([]model.ProductOption, error) {
@@ -211,13 +215,22 @@ func (db *DB) SaveProductOptions(ctx context.Context, productID int64, opts []mo
 }
 
 // ResolveSelectedOptions validates the customer's picks against the product's
+// option axes and computes the price split:
+//
+//   - non-packaging kinds (color/size/material): a value's stored price is the
+//     ABSOLUTE variant price — it replaces the product base price (ADR-0014).
+//     When several selected kinds carry prices, the highest one wins.
+//   - packaging: a value's stored price is an ADD-ON delta on top.
+//
+// It returns (selected, variantBase, packagingDelta, error) where variantBase
+// is the product base price when no priced non-packaging value was selected.
 // actual options and returns the resolved list (with a defaulted packaging
-// pick when the customer sent none) plus the total price delta to add to the
-// product base price. Unknown kinds/values are rejected.
-func (db *DB) ResolveSelectedOptions(ctx context.Context, productID int64, selected []model.SelectedOption) ([]model.SelectedOption, int64, error) {
+// pick when the customer sent none) plus the packaging add-on delta. Unknown
+// kinds/values are rejected.
+func (db *DB) ResolveSelectedOptions(ctx context.Context, productID int64, selected []model.SelectedOption) ([]model.SelectedOption, int64, int64, error) {
 	opts, err := db.ListProductOptions(ctx, productID)
 	if err != nil {
-		return nil, 0, err
+		return nil, 0, 0, err
 	}
 	byKind := make(map[string]model.ProductOption, len(opts))
 	var packaging *model.ProductOption
@@ -231,25 +244,34 @@ func (db *DB) ResolveSelectedOptions(ctx context.Context, productID int64, selec
 	}
 
 	resolved := make([]model.SelectedOption, 0, len(selected)+1)
-	var delta int64
+	var variantBase *int64
+	var packagingDelta int64
 	seen := map[string]bool{}
 	for _, s := range selected {
 		o, ok := byKind[s.Kind]
 		if !ok || !ValidOptionKind(s.Kind) || seen[s.Kind] {
-			return nil, 0, ErrNotFound
+			return nil, 0, 0, ErrNotFound
 		}
 		found := false
 		for _, v := range o.Values {
 			if v.Value == s.Value {
 				if v.PriceDeltaVND != nil {
-					delta += *v.PriceDeltaVND
+					if s.Kind == model.OptionKindPackaging {
+						packagingDelta += *v.PriceDeltaVND
+					} else {
+						// Absolute variant price; the highest priced axis wins.
+						if variantBase == nil || *v.PriceDeltaVND > *variantBase {
+							copied := *v.PriceDeltaVND
+							variantBase = &copied
+						}
+					}
 				}
 				found = true
 				break
 			}
 		}
 		if !found {
-			return nil, 0, ErrNotFound
+			return nil, 0, 0, ErrNotFound
 		}
 		seen[s.Kind] = true
 		resolved = append(resolved, model.SelectedOption{Kind: s.Kind, Value: s.Value})
@@ -260,7 +282,7 @@ func (db *DB) ResolveSelectedOptions(ctx context.Context, productID int64, selec
 		if len(packaging.Values) > 0 {
 			first := packaging.Values[0]
 			if first.PriceDeltaVND != nil {
-				delta += *first.PriceDeltaVND
+				packagingDelta += *first.PriceDeltaVND
 			}
 			resolved = append(resolved, model.SelectedOption{
 				Kind:  model.OptionKindPackaging,
@@ -284,7 +306,11 @@ func (db *DB) ResolveSelectedOptions(ctx context.Context, productID int64, selec
 		}
 	}
 	sortSlice(resolved)
-	return resolved, delta, nil
+	base := int64(0)
+	if variantBase != nil {
+		base = *variantBase
+	}
+	return resolved, base, packagingDelta, nil
 }
 
 func trimSpace(s string) string {
