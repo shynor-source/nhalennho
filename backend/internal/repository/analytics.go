@@ -81,7 +81,13 @@ func (db *DB) Analytics(ctx context.Context, days int) (*AnalyticsSummary, error
 	if days > 365 {
 		days = 365
 	}
-	s := &AnalyticsSummary{}
+	// Non-nil slices: a nil slice serialises as JSON null, which crashes
+	// client code reading .length. Empty arrays are the correct shape.
+	s := &AnalyticsSummary{
+		Series:       []DailyHit{},
+		TopViewed:    []ProductHit{},
+		TopFavorited: []ProductHit{},
+	}
 
 	// Every scalar query takes exactly one $1 window ("today" == window 1:
 	// day > CURRENT_DATE - 1 includes only today). Mismatched placeholder

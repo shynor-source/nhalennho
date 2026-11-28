@@ -20,17 +20,18 @@ function labelForDay(day: string): string {
 
 /** Simple CSS bar chart — no chart library, matches the admin design tokens. */
 function DailyChart({ series }: { series: AnalyticsSummary["series"] }) {
-  if (series.length === 0) {
+  const points = series ?? [];
+  if (points.length === 0) {
     return (
       <p className="text-sm text-muted">
         Chưa có dữ liệu — dữ liệu bắt đầu tính từ hôm nay.
       </p>
     );
   }
-  const max = Math.max(...series.map((p) => p.hits), 1);
+  const max = Math.max(...points.map((p) => p.hits), 1);
   return (
     <div className="flex h-40 items-end gap-1">
-      {series.map((point) => (
+      {points.map((point) => (
         <div
           key={point.day}
           className="group relative flex h-full flex-1 items-end"
@@ -219,7 +220,7 @@ export default function AnalyticsPage() {
             <div className="h-40 animate-pulse rounded-control bg-cream/60" />
           )}
         </div>
-        {summary && summary.series.length > 0 ? (
+        {summary && (summary.series ?? []).length > 0 ? (
           <ChartAxisLabels series={summary.series} />
         ) : null}
       </div>
@@ -230,12 +231,12 @@ export default function AnalyticsPage() {
           <>
             <TopProductsTable
               title={`Sản phẩm được xem nhiều nhất (${days} ngày)`}
-              rows={summary.topViewed}
+              rows={summary.topViewed ?? []}
               emptyHint="Chưa có lượt xem sản phẩm nào."
             />
             <TopProductsTable
               title={`Sản phẩm được yêu thích nhất (${days} ngày)`}
-              rows={summary.topFavorited}
+              rows={summary.topFavorited ?? []}
               emptyHint="Chưa có lượt thích nào."
             />
           </>
